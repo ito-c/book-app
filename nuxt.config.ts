@@ -1,11 +1,13 @@
-export default {
+import { NuxtConfig } from '@nuxt/types'
+
+const config: NuxtConfig = {
   ssr: true,
   srcDir: 'frontend',
   buildDir: 'public',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'hogehoge',
+    title: 'book-app',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -25,6 +27,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/composition-api/module',
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
@@ -45,10 +48,12 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en',
+      lang: 'ja',
     },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 }
+
+export default config
