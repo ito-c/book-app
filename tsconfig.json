@@ -18,5 +18,11 @@
     "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"]
   },
   "files": ["./frontend/@types/vue-shim.d.ts"],
+  "include": [
+    "./frontend/components/**/*.vue",
+    "./frontend/composables/**/*.ts",
+    "./frontend/plugins/*.ts",
+    "./frontend/pages/**/*.vue"
+  ],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
