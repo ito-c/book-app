@@ -127,3 +127,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# build dir
+public
