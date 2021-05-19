@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  app:
+  web:
     build:
       context: .
       dockerfile: Dockerfile.web
@@ -16,6 +16,7 @@ services:
     stdin_open: true
     tty: true
     environment:
+      DB_ROOT_USERNAME: root
       DB_USERNAME: development
       DB_PASSWORD: password
       TZ: Asia/Tokyo
