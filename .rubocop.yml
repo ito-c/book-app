@@ -1,0 +1,20 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - node_modules/**/*
+    - 'bin/**/*'
+Style/RedundantFetchBlock:
+  Exclude:
+    - 'config/puma.rb'
+Layout/LineLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/**/*'
+    - 'db/schema.rb'
+    - 'Rakefile'
+    - 'Gemfile'
+    - db/migrate/**/*
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
