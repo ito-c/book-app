@@ -47,7 +47,26 @@ export default defineComponent({
     const formRef = ref()
     const { formData } = useSignUp()
 
-    return { formData, formRef }
+    const rules = {
+      name: [
+        {
+          required: true,
+          message: 'Please input Activity name',
+          trigger: 'change',
+        },
+        {
+          min: 3,
+          max: 5,
+          message: 'Length should be 3 to 5',
+          trigger: 'change',
+        },
+      ],
+      email: [{}],
+      password: [{}],
+      password_confirmation: [{}],
+    }
+
+    return { formData, rules, formRef }
   },
 })
 </script>
