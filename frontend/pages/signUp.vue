@@ -4,13 +4,13 @@
     <el-form
       ref="formRef"
       :rules="rules"
-      :model="state.form.user"
+      :model="formData.user"
       @validate="validate"
       @submit.native.prevent="submit"
     >
       <el-form-item prop="name" label="名前">
         <el-input
-          v-model="state.form.user.name"
+          v-model="formData.user.name"
           placeholder="test"
           autocomplete="name"
           name="name"
@@ -18,44 +18,36 @@
       </el-form-item>
       <el-form-item prop="email" label="メールアドレス">
         <el-input
-          v-model="state.form.user.email"
+          v-model="formData.user.email"
           type="email"
-          placeholder="example@web-package.jp"
+          placeholder="example@example.com"
           autocomplete="email"
           name="email"
         />
       </el-form-item>
       <el-form-item prop="password" label="パスワード">
-        <el-input v-model="state.form.user.password" type="password" />
+        <el-input v-model="formData.user.password" type="password" />
       </el-form-item>
       <el-form-item prop="password_confirmation" label="確認用パスワード">
-        <el-input
-          v-model="state.form.user.password_confirmation"
-          type="password"
-        />
+        <el-input v-model="formData.password_confirmation" type="password" />
       </el-form-item>
       <el-row class="buttons">
-        <el-button
-          :disabled="!state.form.canSubmit"
-          type="primary"
-          @click="submit"
-        >
-          会員登録する
-        </el-button>
+        <el-button type="primary" @click="submit">会員登録する</el-button>
       </el-row>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import useSignUp from '@/frontend/composables/useSignUp'
 
 export default defineComponent({
   setup() {
+    const formRef = ref()
     const { formData } = useSignUp()
 
-    return { formData }
+    return { formData, formRef }
   },
 })
 </script>
