@@ -5,7 +5,6 @@
       ref="formRef"
       :rules="rules"
       :model="formData.user"
-      @validate="validate"
       @submit.native.prevent="submit"
     >
       <el-form-item prop="name" label="名前">
@@ -29,7 +28,10 @@
         <el-input v-model="formData.user.password" type="password" />
       </el-form-item>
       <el-form-item prop="password_confirmation" label="確認用パスワード">
-        <el-input v-model="formData.password_confirmation" type="password" />
+        <el-input
+          v-model="formData.user.password_confirmation"
+          type="password"
+        />
       </el-form-item>
       <el-row class="buttons">
         <el-button type="primary" @click="submit">会員登録する</el-button>
@@ -40,30 +42,72 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import useSignUp from '@/frontend/composables/useSignUp'
+import useSignUp from '../composables/signUp'
 
 export default defineComponent({
   setup() {
     const formRef = ref()
     const { formData } = useSignUp()
 
+    const validatePasswordConfirm = (rule, value, callback) => {
+      console.log(callback)
+      if (value !== formData.user.password) {
+        callback(new Error('パスワードと一致しません'))
+      } else {
+        callback()
+      }
+    }
+
     const rules = {
       name: [
         {
           required: true,
-          message: 'Please input Activity name',
-          trigger: 'change',
+          message: 'お名前を入力してください',
+          trigger: 'blur',
         },
         {
-          min: 3,
-          max: 5,
-          message: 'Length should be 3 to 5',
-          trigger: 'change',
+          max: 30,
+          message: '30文字以内で入力してください',
+          trigger: 'blur',
         },
       ],
-      email: [{}],
-      password: [{}],
-      password_confirmation: [{}],
+      email: [
+        {
+          required: true,
+          message: 'メールアドレスを入力してください',
+          trigger: 'blur',
+        },
+        {
+          type: 'email',
+          message: '正しい形式のメールアドレスを入力してください',
+          trigger: 'blur',
+        },
+      ],
+      password: [
+        {
+          required: true,
+          message: 'パスワードを入力してください',
+          trigger: 'blur',
+        },
+        {
+          min: 8,
+          message: '8文字以上で入力してください',
+          trigger: 'blur',
+        },
+        {
+          max: 128,
+          message: '128文字以内で入力してください',
+          trigger: 'blur',
+        },
+      ],
+      password_confirmation: [
+        {
+          required: true,
+          message: '確認用パスワードを入力してください',
+          trigger: 'blur',
+        },
+        { validator: validatePasswordConfirm, trigger: 'blur' },
+      ],
     }
 
     return { formData, rules, formRef }
@@ -71,15 +115,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="scss">
-.signUp {
-}
-
-// SP
-@media (max-width: 960px) {
-}
-
-// PC
-@media (min-width: 961px) {
-}
-</style>
+<style></style>
