@@ -1,12 +1,7 @@
 <template>
   <div class="signUp">
     <p>会員登録</p>
-    <el-form
-      ref="formRef"
-      :rules="rules"
-      :model="formData.user"
-      @submit.native.prevent="submit"
-    >
+    <el-form ref="formRef" :rules="rules" :model="formData.user">
       <el-form-item prop="name" label="名前">
         <el-input
           v-model="formData.user.name"
@@ -34,7 +29,9 @@
         />
       </el-form-item>
       <el-row class="buttons">
-        <el-button type="primary" @click="submit">会員登録する</el-button>
+        <el-button type="primary" @click="submitHandle">
+          会員登録する
+        </el-button>
       </el-row>
     </el-form>
   </div>
@@ -42,15 +39,15 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { Message } from 'element-ui'
 import useSignUp from '../composables/signUp'
 
 export default defineComponent({
   setup() {
     const formRef = ref()
-    const { formData } = useSignUp()
+    const { formData, submit, isFormValid } = useSignUp()
 
     const validatePasswordConfirm = (rule, value, callback) => {
-      console.log(callback)
       if (value !== formData.user.password) {
         callback(new Error('パスワードと一致しません'))
       } else {
@@ -110,7 +107,24 @@ export default defineComponent({
       ],
     }
 
-    return { formData, rules, formRef }
+    const submitHandle = () => {
+      formRef.value.validate()
+
+      if (!isFormValid(formRef)) {
+        Message.error('失敗')
+
+        return
+      }
+
+      submit()
+    }
+
+    // formRef.value.validate()が呼ばれたらvalidateイベント発火
+    // const test = () => {
+    //   console.log('test')
+    // }
+
+    return { formData, rules, formRef, submitHandle, isFormValid }
   },
 })
 </script>

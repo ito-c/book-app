@@ -10,11 +10,17 @@ const useSignUp = () => {
     },
   })
 
-  const isFormValid = () => {}
+  const isFormValid = (formRef) => {
+    return formRef.value.fields.every((f) => {
+      return f.validateState === 'success'
+    })
+  }
 
-  const submit = () => {}
+  const submit = () => {
+    console.log('submit')
+  }
 
-  return { formData }
+  return { formData, isFormValid, submit }
 }
 
 export default useSignUp
