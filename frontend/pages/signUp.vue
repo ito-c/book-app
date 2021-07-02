@@ -47,7 +47,7 @@ export default defineComponent({
     const formRef = ref()
     const { formData, submit, isFormValid } = useSignUp()
 
-    const validatePasswordConfirm = (rule, value, callback) => {
+    const validatePasswordConfirm = (_, value, callback) => {
       if (value !== formData.user.password) {
         callback(new Error('パスワードと一致しません'))
       } else {
@@ -108,21 +108,17 @@ export default defineComponent({
     }
 
     const submitHandle = () => {
+      // formの入力内容をチェック
       formRef.value.validate()
 
       if (!isFormValid(formRef)) {
-        Message.error('失敗')
+        Message.error('入力内容に誤りがあります')
 
         return
       }
 
       submit()
     }
-
-    // formRef.value.validate()が呼ばれたらvalidateイベント発火
-    // const test = () => {
-    //   console.log('test')
-    // }
 
     return { formData, rules, formRef, submitHandle, isFormValid }
   },
